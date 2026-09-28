@@ -4,8 +4,8 @@ INSERT INTO pets (
 ) VALUES (
     'Firulais', 
     'Adulto', 
-    1, -- Pet type ID
-    1, -- User ID
+    1, 
+    1, 
     'Cerca de Mall Plaza Tobalaba', 
     CURRENT_TIMESTAMP, 
     'Café con manchas negras', 

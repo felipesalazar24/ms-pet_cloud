@@ -1,31 +1,28 @@
-INSERT INTO pet_types (name_type, breed) VALUES 
-('Perro', 'Husky'),
-('Perro', 'Doberman'),
-('Perro', 'Pastor Alemán'),
-('Perro', 'Labrador'),
-('Perro', 'Cocker Spaniel'),
-('Perro', 'Bulldog'),
-('Perro', 'Caniche'),
-('Perro', 'Beagle'),
-('Perro', 'Chihuahua'),
-('Perro', 'Otro'),
-('Gato', 'Naranjo'),
-('Gato', 'Calico'),
-('Gato', 'Egipcio'),
-('Gato', 'Siamés'),
-('Gato', 'Persa'),
-('Gato', 'Bengalí'),
-('Gato', 'Ragdoll'),
-('Gato', 'Otro'),
-('Ave', 'Loro'),
-('Ave', 'Canario'),
-('Ave', 'Paloma'),
-('Ave', 'Gallina'),
-('Ave', 'Ganso'),
-('Ave', 'Otro'),
-('Otro', 'Conejo'),
-('Otro', 'Hamster'),
-('Otro', 'Tortuga'),
-('Otro', 'Otro')
-
-ON CONFLICT DO NOTHING;
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Husky');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Doberman');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Pastor Alemán');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Labrador');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Cocker Spaniel');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Bulldog');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Caniche');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Beagle');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Chihuahua');
+INSERT INTO pet_types (name_type, breed) VALUES ('Perro', 'Otro');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Naranjo');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Calico');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Egipcio');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Siamés');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Persa');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Bengalí');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Ragdoll');
+INSERT INTO pet_types (name_type, breed) VALUES ('Gato', 'Otro');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Loro');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Canario');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Paloma');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Gallina');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Ganso');
+INSERT INTO pet_types (name_type, breed) VALUES ('Ave', 'Otro');
+INSERT INTO pet_types (name_type, breed) VALUES ('Otro', 'Conejo');
+INSERT INTO pet_types (name_type, breed) VALUES ('Otro', 'Hamster');
+INSERT INTO pet_types (name_type, breed) VALUES ('Otro', 'Tortuga');
+INSERT INTO pet_types (name_type, breed) VALUES ('Otro', 'Otro');

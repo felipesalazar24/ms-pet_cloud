@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,7 +13,6 @@ import java.util.Date;
 @Table(name = "pets")
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Pet {
     
     @Id
@@ -23,7 +22,7 @@ public class Pet {
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    @Column(name = "age_category", nullable = false)
+    @Column(name = "age_category", length = 50, nullable = false)
     private String ageCategory;
 
     @Column(name = "type_id", nullable = false)
@@ -32,11 +31,11 @@ public class Pet {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "last_Seen_Location", length = 100)
+    @Column(name = "last_seen_location", length = 100)
     private String lastSeenLocation;
 
-    @Column(name = "last_Seen_Date", nullable = false)
-    private Date lastSeenDate;
+    @Column(name = "last_seen_date", nullable = false)
+    private LocalDateTime lastSeenDate;
 
     @Column (name = "color", length = 30)
     private String color;
@@ -44,7 +43,6 @@ public class Pet {
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", length = 50, nullable = false)
     private String status;
-
 }

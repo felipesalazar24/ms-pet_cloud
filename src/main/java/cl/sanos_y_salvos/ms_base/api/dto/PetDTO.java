@@ -1,7 +1,9 @@
 package cl.sanos_y_salvos.ms_base.api.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -14,7 +16,7 @@ public class PetDTO {
     private Long typeId;
     private Long userId;
     private String lastSeenLocation;
-    private Date lastSeenDate;
+    private LocalDateTime lastSeenDate;
     private String color;
     private String description;
     private String status;
