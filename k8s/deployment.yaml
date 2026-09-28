@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-pet-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-pet
+  template:
+    metadata:
+      labels:
+        app: ms-pet
+    spec:
+      containers:
+      - name: ms-pet
+        image: tu-registro-aws/ms-pet:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: oracle-db-secrets
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: oracle-db-secrets
+              key: password
+        - name: DB_URL
+          value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+        volumeMounts:
+        - name: oracle-wallet-volume
+          mountPath: /app/wallet
+          readOnly: true
+      volumes:
+      - name: oracle-wallet-volume
+        secret:
+          secretName: oracle-wallet-secret
