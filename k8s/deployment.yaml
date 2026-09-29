@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ms-pet
-        image: tu-registro-aws/ms-pet:latest
+        image: felipesalazar24/ms-pet:latest
         ports:
         - containerPort: 8082
         env:
