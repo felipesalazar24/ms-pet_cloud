@@ -3,6 +3,7 @@ package cl.sanos_y_salvos.ms_base.api.service;
 import cl.sanos_y_salvos.ms_base.api.dto.PetDTO;
 import cl.sanos_y_salvos.ms_base.api.model.Pet;
 import cl.sanos_y_salvos.ms_base.api.repository.PetRepository;
+import cl.sanos_y_salvos.ms_base.api.publisher.NotificationPublisher;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,10 @@ public class PetService {
     
     @Autowired
     private PetRepository petRepository;
+
+    // 1. Inyectas tu motor de envío de RabbitMQ
+    @Autowired
+    private NotificationPublisher notificationPublisher;
 
     public PetDTO getPetById(Long id) {
         Pet pet = petRepository.findById(id)
@@ -32,6 +37,10 @@ public class PetService {
     public PetDTO createPet(PetDTO petDto) {
         Pet pet = dtoToEntity(petDto);
         Pet savedPet = petRepository.save(pet);
+        
+        // 2. Disparas el evento asíncrono usando el nombre de la mascota guardada
+        notificationPublisher.publishPetRegisteredEvent(savedPet.getName());
+        
         return entityToDto(savedPet);
     }
 
@@ -95,5 +104,4 @@ public class PetService {
         entity.setDescription(dto.getDescription());
         entity.setStatus(dto.getStatus());
     }
-
 }
