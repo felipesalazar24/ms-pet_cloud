@@ -15,7 +15,8 @@ public class PetProducer {
     }
 
     public void sendNotification(String message) {
-        rabbitTemplate.convertAndSend("ex.sanosysalvos.events", "notify.pet", message);
+        rabbitTemplate.convertAndSend("ex.sanosysalvos.events", "notify.pet.created", message);
+        System.out.println("Evento publicado en RabbitMQ: " + message);
     }
 
     public void sendAudit(String message) {

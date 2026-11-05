@@ -1,13 +1,12 @@
 package cl.sanos_y_salvos.ms_base.api.config;
 
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-
+    
     @Bean
     public DirectExchange commandExchange() {
         return new DirectExchange("ex.sanosysalvos.command");
@@ -16,5 +15,61 @@ public class RabbitMQConfig {
     @Bean
     public TopicExchange eventExchange() {
         return new TopicExchange("ex.sanosysalvos.events");
+    }
+
+    @Bean
+    public Queue commandDlq() {
+        return QueueBuilder.durable("q.pet.command.dlq").build();
+    }
+
+    @Bean
+    public Queue commandQueue() {
+        return QueueBuilder.durable("q.pet.command")
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", "q.pet.command.dlq")
+                .build();
+    }
+
+    @Bean
+    public Binding commandBinding(Queue commandQueue, DirectExchange commandExchange) {
+        return BindingBuilder.bind(commandQueue).to(commandExchange).with("pet.command");
+    }
+
+    @Bean
+    public Queue notificationDlq() {
+        return QueueBuilder.durable("q.user.notification.dlq").build();
+    }
+
+    @Bean
+    public Queue notificationQueue() {
+        return QueueBuilder.durable("q.user.notification")
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", "q.user.notification.dlq")
+                .withArgument("x-message-ttl", 60000) // Política de retención de 60s
+                .withArgument("x-max-length", 1000) // Límite de mensajes
+                .build();
+    }
+
+    @Bean
+    public Binding notificationBinding(Queue notificationQueue, TopicExchange eventExchange) {
+        return BindingBuilder.bind(notificationQueue).to(eventExchange).with("notify.#");
+    }
+
+    @Bean
+    public Queue auditDlq() {
+        return QueueBuilder.durable("q.system.audit.dlq").build();
+    }
+
+    @Bean
+    public Queue auditQueue() {
+        return QueueBuilder.durable("q.system.audit")
+                .withArgument("x-dead-letter-exchange", "")
+                .withArgument("x-dead-letter-routing-key", "q.system.audit.dlq")
+                .build();
+    }
+
+    @Bean
+    public Binding auditBinding(Queue auditQueue, TopicExchange eventExchange) {
+        return BindingBuilder.bind(auditQueue).to(eventExchange).with("audit.#");
     }
 }
