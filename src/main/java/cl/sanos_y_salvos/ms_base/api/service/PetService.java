@@ -3,6 +3,7 @@ package cl.sanos_y_salvos.ms_base.api.service;
 import cl.sanos_y_salvos.ms_base.api.dto.PetDTO;
 import cl.sanos_y_salvos.ms_base.api.model.Pet;
 import cl.sanos_y_salvos.ms_base.api.repository.PetRepository;
+import cl.sanos_y_salvos.ms_base.api.producer.PetProducer;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,9 @@ public class PetService {
     
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private PetProducer petProducer;
 
     public PetDTO getPetById(Long id) {
         Pet pet = petRepository.findById(id)
@@ -32,6 +36,10 @@ public class PetService {
     public PetDTO createPet(PetDTO petDto) {
         Pet pet = dtoToEntity(petDto);
         Pet savedPet = petRepository.save(pet);
+        
+        petProducer.sendNotification("Mascota registrada exitosamente: " + savedPet.getName());
+        petProducer.sendAudit("AUDIT: Se creó una nueva mascota con ID " + savedPet.getId());
+
         return entityToDto(savedPet);
     }
 
@@ -41,8 +49,10 @@ public class PetService {
             .orElseThrow(() -> new RuntimeException("Mascota no encontrada con el id: " + id));
         
         updateEntityFromDto(existingPet, petDto);
-        
         Pet updatedPet = petRepository.save(existingPet);
+
+        petProducer.sendAudit("AUDIT: Se actualizó la mascota con ID " + updatedPet.getId());
+
         return entityToDto(updatedPet);
     }
 
@@ -50,6 +60,8 @@ public class PetService {
     public void deletePet(Long id) {
         if (petRepository.existsById(id)) {
             petRepository.deleteById(id);
+            petProducer.sendCommand("CMD: Eliminar registros asociados a la mascota ID " + id);
+            petProducer.sendAudit("AUDIT: Se eliminó la mascota con ID " + id);
         } else {
             throw new RuntimeException("Mascota no encontrada con el id: " + id);
         }
@@ -95,5 +107,4 @@ public class PetService {
         entity.setDescription(dto.getDescription());
         entity.setStatus(dto.getStatus());
     }
-
 }
