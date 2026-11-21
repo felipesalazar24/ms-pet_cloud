@@ -8,5 +8,4 @@ public class PetTypeDTO {
     private Long id;
     private String nameType;
     private String breed;
-
 }
