@@ -33,6 +33,14 @@ spec:
                   key: password
             - name: DB_URL
               value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-service"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USER
+              value: "guest"
+            - name: RABBITMQ_PASSWORD
+              value: "guest"
             - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
               value: "kafka-service:9092"
           volumeMounts:
