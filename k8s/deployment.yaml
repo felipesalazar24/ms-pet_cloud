@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-pet-deployment
+  labels:
+    app: ms-pet
 spec:
   replicas: 1
   selector:
@@ -13,28 +15,31 @@ spec:
         app: ms-pet
     spec:
       containers:
-      - name: ms-pet
-        image: felipesalazar24/ms-pet:latest
-        ports:
-        - containerPort: 8082
-        env:
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: oracle-db-secrets
-              key: username
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: oracle-db-secrets
-              key: password
-        - name: DB_URL
-          value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
-        volumeMounts:
-        - name: oracle-wallet-volume
-          mountPath: /app/wallet
-          readOnly: true
+        - name: ms-pet
+          image: felipesalazar24/ms-pet:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-db-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-db-secrets
+                  key: password
+            - name: DB_URL
+              value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"
+          volumeMounts:
+            - name: oracle-wallet-volume
+              mountPath: /app/wallet
+              readOnly: true
       volumes:
-      - name: oracle-wallet-volume
-        secret:
-          secretName: oracle-wallet-secret
+        - name: oracle-wallet-volume
+          secret:
+            secretName: oracle-wallet-secret
